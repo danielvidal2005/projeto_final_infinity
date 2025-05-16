@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wayne Industries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="painel-container">
+        <img src="{{ url_for('static', filename='imagens/wayne_logo.png') }}" alt="Logo da Empresa" class="logo">
+
+        <h1>Bem-vindo, {{ nome_usuario }}!</h1>
+        <h3>Nível de acesso: {{ nivel_acesso }}</h3>
+
+        <div class="botoes-container">
+            {% if nivel == 1 %}
+                <button onclick="location.href='/cadastrar_usuario'">Cadastrar usuários</button>
+                <button onclick="location.href='/ativar_desativar'">Ativar/Desativar usuários</button>
+            {% endif %}
+
+            {% if nivel <= 2 %}
+                <button onclick="location.href='/editar_itens'">Editar e excluir itens</button>
+            {% endif %}
+
+            {% if nivel <= 3 %}
+                <button onclick="location.href='/cadastrar_item'">Cadastrar novo item</button>
+            {% endif %}
+
+            <button onclick="location.href='/consultar_itens'">Consultar itens</button>
+        </div>
+
+        <a class="logout-link" href="{{ url_for('logout') }}">Sair</a>
+    </div>
+</body>
+</html>

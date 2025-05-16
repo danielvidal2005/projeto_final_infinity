@@ -6,16 +6,28 @@ def criar_tabela_usuario():
     with sqlite3.connect("usuarios.db") as conn:
         cursor = conn.cursor()
         cursor.execute('''
-            CREATE TABLE IF NOT EXISTIS usuarios (
+            CREATE TABLE IF NOT EXISTS usuarios (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nome_completo TEXT NOT NULL,
                 login TEXT UNIQUE NOT NULL,
                 senha_hash TEXT NOT NULL,
-                nivel_acesso TEXT NOT NULL 
+                nivel_acesso INTEGER NOT NULL, 
                 ativo INTEGER DEFAULT 1   
             )
         ''')
         conn.commit()
+
+def criar_admin_padrao():
+    with sqlite3.connect('usuarios.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM usuarios WHERE login = 'admin'")
+        if not cursor.fetchone():
+            senha_hash = bcrypt.hashpw("admin123".encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            cursor.execute('''
+                INSERT INTO usuarios (nome_completo, login, senha_hash, nivel_acesso)
+                VALUES (?, ?, ?, ?)
+            ''', ("Sr. Wayne", "admin", senha_hash, "1"))
+            conn.commit()
 
 
 def cadastrar_usuario(nome_completo: str, login: str, senha: str, nivel_acesso: str) -> bool:

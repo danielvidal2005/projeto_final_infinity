@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Usuário</title>
+
+</head>
+<body>
+    <h2>Cadastrar Novo Usuário</h2>
+    <form method="POST" action="{{ url_for('salvar_usuario') }}">
+        <label>Nome completo:</label><input type="text" name="nome_completo"><br>
+        <label>Login:</label><input type="text" name="login"><br>
+        <label>Senha:</label><input type="password" name="senha"><br>
+        <label>Nível de acesso:</label>
+        <select name="nivel_acesso">
+            <option value="1">Admin</option>
+            <option value="2">Diretor</option>
+            <option value="3">Gerente</option>
+            <option value="4">Funcionário</option>
+        </select><br>
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    
+</body>
+</html>

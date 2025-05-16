@@ -1,6 +1,7 @@
 import sqlite3
 from PIL import Image
 import io
+import base64
 
 
 def criar_tabela_inventario():
@@ -18,6 +19,21 @@ def criar_tabela_inventario():
         conn.commit()
 
 
+def obter_itens_com_imagem():
+    with sqlite3.connect('inventario.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT id, item, tipo, quantidade, imagem FROM inventario')
+        itens = []
+
+        for id_item, item, tipo, qtd, imagem_blob in cursor.fetchall():
+            imagem_base64 = None
+            if imagem_blob:
+                imagem_base64 = base64.b64encode(imagem_blob).decode('utf-8')
+            itens.append((id_item, item, tipo, qtd, imagem_base64))
+        
+        return itens
+
+
 def ler_imagem(caminho_imagem):
     with open(caminho_imagem, 'rb') as file:
         blob = file.read()
@@ -31,10 +47,17 @@ def inserir_item(item, quantidade, caminho_imagem):
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO inventario
-            (item, quantidade, imagem)
-            VALUES (?, ?, ?)
+            (item, tipo, quantidade, caminho_imagem)
+            VALUES (?, ?, ?, ?)
         ''', (item, quantidade, imagem_blob))
         conn.commit()
+
+def obter_itens():
+    with sqlite3.connect('inventario.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT id, item, tipo, quantidade FROM inventario')
+        return cursor.fetchall()
+
 
 
 def visualizar_itens():
