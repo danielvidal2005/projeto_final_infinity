@@ -56,7 +56,7 @@ body {
     background-color: #222;
 }
 
-.login-form button {
+button {
     border-radius: 20px;
     padding: 16px 0;
     background: #111;
@@ -70,7 +70,7 @@ body {
     transition: box-shadow 0.3s, color 0.3s;
 }
 
-.login-form button:hover {
+button:hover {
     box-shadow:
         inset 6px 6px 10px #0a0a0a,
         inset -6px -6px 10px #1a1a1a;
