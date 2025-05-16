@@ -10,7 +10,8 @@ def criar_tabela_inventario():
             CREATE TABLE IF NOT EXISTS inventario (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 item TEXT NOT NULL,
-                quantidade INTEGER NOT NULL   
+                tipo TEXT NOT NULL,
+                quantidade INTEGER NOT NULL,   
                 imagem BLOB     
             )
         ''')

@@ -11,7 +11,8 @@ def criar_tabela_usuario():
                 nome_completo TEXT NOT NULL,
                 login TEXT UNIQUE NOT NULL,
                 senha_hash TEXT NOT NULL,
-                nivel_acesso TEXT NOT NULL    
+                nivel_acesso TEXT NOT NULL 
+                ativo INTEGER DEFAULT 1   
             )
         ''')
         conn.commit()
